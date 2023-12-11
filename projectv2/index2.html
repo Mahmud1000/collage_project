@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ipinfo</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Icons Link -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <script src="https://kit.fontawesome.com/3b161c540c.js" crossorigin="anonymous"></script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            scroll-behavior: smooth;
+        }
+
+        .hero-section,
+        .about-section,
+        .services-section {
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-content">
+
+        <header>
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <img src="img/Union.svg" alt="Ipinfo Logo">
+                </a>
+                <ul class="menu-links">
+                    <li><a href="#hero-section">Home</a></li>
+                    <li><a href="#about-section">About</a></li>
+                    <li><a href="#services-section">Services</a></li>
+                    <li><a href="#">Sign In</a></li>
+                    <li class="join-btn"><a href="#">Join Us</a></li>
+                    <span id="close-menu-btn" class="material-symbols-outlined">close</span>
+                </ul>
+                <span id="hamburger-btn" class="material-symbols-outlined">menu</span>
+            </nav>
+        </header>
+
+        <section id="hero-section" class="hero-section">
+            <div class="content">
+                <h1>
+                    Explore IPs, discover online identities with ease.
+                </h1>
+                <h3 id="user-ip-message"></h3>
+
+                <form action="#" class="search-form" onsubmit="searchIP(event)">
+                    <input type="text" id="ipInput" placeholder="Search for ip information..." required>
+                    <button class="material-symbols-outlined" type="submit">search</button>
+                </form>
+                <div id="result-div" class="result-container"></div>
+            </div>
+        </section>
+
+        <section id="about-section" class="about-section">
+            <!-- Content for the About section goes here -->
+            <h2>About Us</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+        </section>
+
+        <section id="services-section" class="services-section">
+            <h2>Our Services</h2>
+
+            <div class="card-list">
+                <a href="#" class="card-item ipinfo" onclick="openDetails('index2.html')">
+                    <img src="img/ipinfo.webp" alt="ipinf Image">
+                    <span>Ipinfo</span>
+                    <h3>
+                        "Explore IPs, discover online identities with ease. Knowledge simplified."
+                    </h3>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right card-icon"></i>
+                    </div>
+                </a>
+                <a href="#" class="card-item speedtest" onclick="openDetails('comingsoon.html')">
+                    <img src="img/speedtest.png" alt="Card Image">
+                    <span>Speedtest</span>
+                    <h3>
+                        "Test, optimize, elevate – speed up your online journey effortlessly."
+                    </h3>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right card-icon"></i>
+                    </div>
+                </a>
+                <a href="#" class="card-item comingsoon" onclick="openDetails('comingsoon.html')">
+                    <img src="img/commingsoon.jpeg" alt="Card Image">
+                    <span>Unknown</span>
+                    <h3>"Suspense builds as a groundbreaking feature quietly approaches. Stay tuned!"
+                    </h3>
+                    <div class="arrow">
+                        <i class="fas fa-arrow-right card-icon"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+
+
+    <footer class="footer">
+        <div class="container row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="#about-section">about us</a></li>
+                    <li><a href="#services-section">our services</a></li>
+                    <li><a href="#">privacy policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>get help</h4>
+                <ul>
+                    <li><a href="comingsoon.html">FAQ</a></li>
+                    <li><a href="comingsoon.html">Subscription</a></li>
+                    <li><a href="comingsoon.html">payment options</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Source</h4>
+                <ul>
+                    <li><a href="comingsoon.html">download</a></li>
+                    <li><a href="comingsoon.html">changelog</a></li>
+                    <li><a href="comingsoon.html">github</a></li>
+
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>follow us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function openDetails(page) {
+            window.location.href = page;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        const header = document.querySelector("header");
+        const hamburgerBtn = document.querySelector("#hamburger-btn");
+        const closeMenuBtn = document.querySelector("#close-menu-btn");
+
+        // Toggle mobile menu on hamburger button click
+        hamburgerBtn.addEventListener("click", () => header.classList.toggle("show-mobile-menu"));
+
+        // Close mobile menu on close button click
+        closeMenuBtn.addEventListener("click", () => hamburgerBtn.click());
+
+        // Display user IP address on page load
+        window.addEventListener("load", () => {
+            fetch("https://api64.ipify.org?format=json")
+                .then(response => response.json())
+                .then(data => {
+                    const userIpMessage = document.getElementById("user-ip-message");
+                    userIpMessage.textContent = `Your IP address: ${data.ip}`;
+                })
+                .catch(error => console.error("Error fetching user IP:", error));
+        });
+
+        // Function to search IP information
+        function searchIP(event) {
+            event.preventDefault();
+            const ipInput = document.getElementById('ipInput').value;
+            const resultContainer = document.getElementById('result-div');
+
+            // Show loading animation
+            resultContainer.innerHTML = '<p>Loading...</p>';
+
+            // Fetch IP information from ipapi server
+            fetch(`https://ipapi.co/${ipInput}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Display fetched result
+                    const resultHTML = `
+                        <p>IP: ${data.ip}</p>
+                        <p>City: ${data.city}</p>
+                        <p>Region: ${data.region}</p>
+                        <p>Country: ${data.country}</p>
+                        <p>Latitude: ${data.latitude}</p>
+                        <p>Longitude: ${data.longitude}</p>
+                        <p>Timezone: ${data.timezone}</p>
+                        <p>Currency: ${data.currency}</p>
+                        <p>Languages: ${data.languages}</p>
+                        <p>ASN: ${data.asn}</p>
+                        <p>Organization: ${data.org}</p>
+                        <p>Hostname: ${data.hostname}</p>
+                    `;
+                    resultContainer.innerHTML = resultHTML;
+                })
+                .catch(error => {
+                    // Display error message
+                    resultContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+                });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add this code to your existing JavaScript
+        window.addEventListener("scroll", () => {
+            const header = document.querySelector("header");
+            header.classList.toggle("blur", window.scrollY > 0);
+        });
+
+    </script>
+</body>
+
+</html>
